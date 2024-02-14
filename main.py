@@ -211,6 +211,7 @@ if __name__ == "__main__":
         "y": 13914,
         "z": 1115,
     }
+
     time_list: list[float] = []
     frequencies_list: list[dict[str, int]] = []
 
@@ -231,4 +232,3 @@ if __name__ == "__main__":
 
     if is_ok:
         print("Everything is ok")
-
