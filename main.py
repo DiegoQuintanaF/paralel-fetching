@@ -81,8 +81,6 @@ def main(times: list[float], frequencies: list[dict[str, int]]) -> None:
         main_frequency[key] /= finished_count
         main_frequency[key] *= 100
 
-    print(finished_count)
-
     frequencies.append(main_frequency)
     print(json.dumps(main_frequency, indent=4))
     print('Done, time taken', end - start)
@@ -134,8 +132,6 @@ def main_2(times: list[float], frequencies: list[dict[str, int]]) -> None:
         main_frequency[key] /= finished_count
         main_frequency[key] *= 100
 
-    print(finished_count)
-
     frequencies.append(main_frequency)
     print('Done, time taken', end - start)
 
@@ -183,6 +179,7 @@ def are_different(dic1: dict[str, int], expected_frequency: dict[str, int]):
             print(f'dict1["{c}"] = {dic1[c]} is not equal to '
                   f'expected_frequency["{c}"] = {expected_frequency[c] / finished_count * 100}')
             return True
+    return False
 
 
 if __name__ == "__main__":
@@ -214,12 +211,24 @@ if __name__ == "__main__":
         "y": 13914,
         "z": 1115,
     }
-
     time_list: list[float] = []
     frequencies_list: list[dict[str, int]] = []
 
-    for _ in range(1):
+    count: int = 0
+    for _ in range(6):
         main(time_list, frequencies_list)
+        if _ == 0:
+            count = finished_count
+        finished_count = 0
 
+    finished_count = count
+
+    is_ok: bool = True
     for freq in frequencies_list:
-        are_different(freq, expected_freq)
+        if are_different(freq, expected_freq):
+            is_ok = False
+            break
+
+    if is_ok:
+        print("Everything is ok")
+
